@@ -32,7 +32,9 @@
 #include <string.h>
 #include <time.h>
 #include <stdint.h>
+#ifndef __WINDOWS__
 #include <unistd.h>
+#endif
 #include <signal.h>
 
 #include <map>
@@ -44,7 +46,7 @@
 #include "../osdep/Phy.hpp"
 
 #define ZT_TCP_PROXY_CONNECTION_TIMEOUT_SECONDS 300
-#define ZT_TCP_PROXY_TCP_PORT 443
+#define ZT_TCP_PROXY_TCP_PORT 8443
 
 using namespace ZeroTier;
 
@@ -283,8 +285,10 @@ struct TcpProxyService
 
 int main(int argc,char **argv)
 {
+#ifndef __WINDOWS__
 	signal(SIGPIPE,SIG_IGN);
 	signal(SIGHUP,SIG_IGN);
+#endif
 	srand(time((time_t *)0));
 
 	TcpProxyService svc;
